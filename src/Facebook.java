@@ -26,16 +26,16 @@ import com.restfb.types.Post;
 
 public class Facebook {
 
-	// Permet d'avoir la liste des pages aimés par l'utilisateur
+	// Permet d'avoir la liste des pages aimÃ©s par l'utilisateur
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		String accessToken = ""; // Lien
-		String mot = "température";
+		String mot = "tempÃ©rature";
 		
 		try {
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-			Document doc = docBuilder.newDocument();// d'accés
+			Document doc = docBuilder.newDocument();// d'accÃ©s
 
 			Element rootElement = doc.createElement("PAGE");
 			doc.appendChild(rootElement);
@@ -95,7 +95,7 @@ public class Facebook {
 						for (List<Comment> postcomments : allComments) {
 							int count = 1;
 							for (Comment comment : postcomments) {
-								System.out.println("Message numéro " + count + " : " + comment.getMessage());
+								System.out.println("Message numÃ©ro " + count + " : " + comment.getMessage());
 								System.out.println("Mentions J'aime : " + comment.getLikeCount());
 								System.out.println("fb.com/" + comment.getId());
 								System.out.println("");
@@ -128,7 +128,7 @@ public class Facebook {
 			DOMSource source = new DOMSource(doc);
 			StreamResult result = new StreamResult(new File(mot + "_" + page.getName() +".xml"));
 			transformer.transform(source, result);
-			System.out.println("Le fichier est sauvegardé !");
+			System.out.println("Le fichier est sauvegardÃ© !");
 
 		} catch (ParserConfigurationException pce) {
 			pce.printStackTrace();
@@ -138,5 +138,4 @@ public class Facebook {
 	}
 	
 	
-
 }
