@@ -1,3 +1,5 @@
+package recupInfos;
+
 
 
 import java.io.IOException;
@@ -10,7 +12,7 @@ public class TimeServer {
 
    //On initialise des valeurs par défaut
    private int port = 2345;
-   private String host = "127.0.0.1";
+   private String host = "127.0.0.7";
    private ServerSocket server = null;
    private boolean isRunning = true;
    
@@ -25,12 +27,8 @@ public class TimeServer {
    }
    
    public TimeServer(String pHost, int pPort){
-	  ParametreServer ParamServ = new ParametreServer();
-	  while(ParamServ.pHost=="" && ParamServ.pPort==0){
-		  
-	  }
-      host = ParamServ.pHost;
-      port = ParamServ.pPort;
+      host = pHost;
+      port = pPort;
       try {
          server = new ServerSocket(port, 100, InetAddress.getByName(host));
       } catch (UnknownHostException e) {

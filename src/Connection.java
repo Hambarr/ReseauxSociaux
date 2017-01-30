@@ -1,3 +1,5 @@
+package recupInfos;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Desktop;
@@ -15,6 +17,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class Connection extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel container = new JPanel();
 	private JTextField jtf = new JTextField("");
 	private JLabel label = new JLabel("Ajouter votre jeton d'accès : ");
@@ -31,7 +37,6 @@ public class Connection extends JFrame {
 		f=facebook;
 		this.setTitle("Connection à Facebook");
 		this.setSize(400, 100);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.setAlwaysOnTop(true);
 		this.setLocationRelativeTo(null);
@@ -81,6 +86,7 @@ public class Connection extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("Token : " + jtf.getText());
 			f.setToken(jtf.getText());
+			dispose();
 		}
 	}
 	
