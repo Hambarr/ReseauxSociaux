@@ -11,17 +11,22 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+//Non utilisé, permet à l'utilisateur de se connecter sur un serveur à distance
+//A besoin d'une vérification pour que ce soit fonctionnel
+
 public class ParametreServer extends JFrame {
 	private JPanel container = new JPanel();
-	private JTextField jtf = new JTextField("0");
-	private JTextField jtf2 = new JTextField("");
+	private JTextField jtf = new JTextField("10055");
+	private JTextField jtf2 = new JTextField("127.0.0.1");
 	private JLabel label = new JLabel("Port : ");
 	private JLabel label2 = new JLabel("Host : ");
 	private JButton b = new JButton("OK");
-	int pPort;
-	String pHost;
+	int pPort = 2345;
+	String pHost = "127.0.0.1";
+	TimeServer Serveur;
 
-	public ParametreServer() {
+	public ParametreServer(TimeServer Server) {
+		this.Serveur = Server;
 		this.setTitle("Parametre du serveur");
 		this.setSize(470, 68);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -55,7 +60,13 @@ public class ParametreServer extends JFrame {
 			System.out.println("Host : " + jtf2.getText());
 			pPort = Integer.parseInt(jtf.getText());
 			pHost = jtf2.getText();
+			SetPostHost(pPort, pHost);
 
 		}
+	}
+	
+	void SetPostHost(int p, String h){
+		Serveur.setHost(h);
+		Serveur.setPort(p);
 	}
 }
