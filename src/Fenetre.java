@@ -1,10 +1,9 @@
-package recupInfos;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -45,18 +44,23 @@ public class Fenetre extends JFrame {
 	private JLabel motCle = new JLabel("Entrez le mot à rechercher");	
 	private JLabel nomPage = new JLabel("Entrez le nom de la page");
 	private Facebook f = new Facebook();
+	private Font police = new Font("Arial", Font.BOLD, 14);
+	private JLabel labelVerification = new JLabel("");
+
+
 	
 	public Fenetre() {
 		this.setTitle("Simulation de la propagation des intérêts dans les réseaux sociaux");
 		this.setSize(1300, 700);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
-		this.setAlwaysOnTop(true);
 		this.setLocationRelativeTo(null);
 		this.token.add(obtenirToken);
 		JTabbedPane onglets = new JTabbedPane(SwingConstants.TOP);
 		jtfNom.setPreferredSize(new Dimension(150, 30));
 		jtfMot.setPreferredSize(new Dimension(150, 30));
+		
+
 		
 		JPanel onglet1 = new JPanel();
 		onglet1.add(nomPage);
@@ -65,6 +69,7 @@ public class Fenetre extends JFrame {
 		onglet1.add(jtfMot);
 		onglet1.add(valider);
 		onglet1.add(recherche);
+		onglet1.add(labelVerification);
 		onglet1.setPreferredSize(new Dimension(this.getWidth() - 30, this.getHeight() - 100));
 		onglets.addTab("Extraction", onglet1);
 
@@ -101,7 +106,14 @@ public class Fenetre extends JFrame {
 			
 			System.out.println("Nom : " + jtfNom.getText());
 			System.out.println("Mot : " + jtfMot.getText());
-			f.Extraction(jtfNom.getText(), jtfMot.getText());
+			if(f.Extraction(jtfNom.getText(), jtfMot.getText())){
+				labelVerification.setForeground(Color.GREEN);
+				labelVerification.setText("Données extraites avec succès!");
+			}
+			else{
+				labelVerification.setForeground(Color.RED);
+				labelVerification.setText("Erreur durant l'extraction.");
+			}
 		}
 	}
 	
