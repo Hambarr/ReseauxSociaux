@@ -1,4 +1,6 @@
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -11,6 +13,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.jdom2.input.SAXBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -26,12 +29,6 @@ import com.restfb.types.User;
 public class Facebook {
 
 	String nomPage, motCle;
-
-	public static void main(String[] args) {
-
-		Extraction("cocacolafrance", "température");
-
-	}
 
 	static String Token;
 
@@ -108,7 +105,7 @@ public class Facebook {
 							System.out.println("Mentions J'aime sur la publication : " + likesTotalCount);
 							System.out.println("");
 
-							Element posteur = doc.createElement("POSTEUR");
+							Element posteur = doc.createElement("AUTEUR");
 							posteur.appendChild(doc.createTextNode(aPost.getFrom().getName()));
 							publication.appendChild(posteur);
 
@@ -168,7 +165,7 @@ public class Facebook {
 					new File("Donnees").mkdirs();
 
 				}
-				StreamResult result = new StreamResult(new File("Donnees/" + page.getName() + "_" + mot + ".xml"));
+				StreamResult result = new StreamResult(new File("Donnees/" + nomPage + "_" + mot + ".xml"));
 				transformer.transform(source, result);
 				System.out.println("Le fichier " + page.getName() + "_" + mot + ".xml est sauvegardé !");
 
@@ -183,5 +180,5 @@ public class Facebook {
 			System.out.println("Extraction échouée");
 			return false;
 		}
-	}
+	}	
 }
