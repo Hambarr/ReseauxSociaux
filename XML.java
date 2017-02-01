@@ -19,7 +19,7 @@ public class XML {
 	public static Object[][] XMLintoTAB(String nomPage, String motCle) {
 		SAXBuilder sxb = new SAXBuilder();
 		try {
-			document = sxb.build(new File("Donnees/"+nomPage+"_"+motCle+".xml"));
+			document = sxb.build(new File("Donnees/" + nomPage + "_" + motCle + ".xml"));
 		} catch (Exception e) {
 		}
 		racine = document.getRootElement();

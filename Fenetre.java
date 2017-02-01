@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URI;
 
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -68,7 +69,7 @@ public class Fenetre extends JFrame {
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.token.add(obtenirToken);
-		JTabbedPane onglets = new JTabbedPane(SwingConstants.TOP);
+		JTabbedPane onglets = new JTabbedPane();
 		jtfNom.setPreferredSize(new Dimension(150, 30));
 		jtfMot.setPreferredSize(new Dimension(150, 30));
 		
@@ -81,13 +82,12 @@ public class Fenetre extends JFrame {
 		onglet1.add(valider);
 		onglet1.add(recherche);
 		onglet1.add(labelVerification);	
-		onglet1.setPreferredSize(new Dimension(this.getWidth() - 30, this.getHeight() - 100));
-		JScrollPane scrl = new JScrollPane();
-		scrl.setPreferredSize(new Dimension(400,400));
-		scrl.add(onglet1);
-		onglets.addTab("Extraction", onglet1);
+		onglet1.setPreferredSize(new Dimension(this.getWidth()-88, this.getHeight() +5000));
 		
-
+        JScrollPane scroll = new JScrollPane(onglet1);
+        scroll.setPreferredSize(new Dimension(this.getWidth()-20, this.getHeight() -88));
+       	
+		onglets.addTab("Extraction", scroll);
 		JPanel onglet2 = new JPanel();
 		JLabel titreOnglet2 = new JLabel("Analyse");
 		onglet2.add(titreOnglet2);
@@ -122,24 +122,26 @@ public class Fenetre extends JFrame {
 			System.out.println("Nom : " + jtfNom.getText());
 			System.out.println("Mot : " + jtfMot.getText());
 			if(f.Extraction(jtfNom.getText(), jtfMot.getText())){
-				XML xml = new XML();
-				Object[][] donnees=xml.XMLintoTAB(jtfNom.getText(),jtfMot.getText());
-				tableau=new JTable(donnees, entetes);
-				tableau.getColumnModel().getColumn(0).setPreferredWidth(150);
-				tableau.getColumnModel().getColumn(1).setPreferredWidth(150);
-				tableau.getColumnModel().getColumn(2).setPreferredWidth(150);
-		        onglet1.add(tableau);
 				labelVerification.setForeground(Color.GREEN);
 				labelVerification.setText("Données extraites avec succès!");
+				try{
+					XML xml = new XML();
+					Object[][] donnees=xml.XMLintoTAB(jtfNom.getText(),jtfMot.getText());
+					tableau=new JTable(donnees, entetes);
+					tableau.getColumnModel().getColumn(0).setPreferredWidth(150);
+					tableau.getColumnModel().getColumn(1).setPreferredWidth(150);
+					tableau.getColumnModel().getColumn(2).setPreferredWidth(150);
+			        onglet1.add(tableau);
+				}
+				catch(Exception ex){
+					labelVerification.setForeground(Color.GREEN);
+					labelVerification.setText("Données extraites avec succès! Trop de données pour un affichage.");
+				}
+				
 			}
 			else{
 				labelVerification.setForeground(Color.RED);
 				labelVerification.setText("Erreur durant l'extraction.");
-				tableau=new JTable(donnees_vide, entetes);
-				tableau.getColumnModel().getColumn(0).setPreferredWidth(150);
-				tableau.getColumnModel().getColumn(1).setPreferredWidth(150);
-				tableau.getColumnModel().getColumn(2).setPreferredWidth(150);
-				onglet1.add(tableau);
 			}
 		}
 	}
