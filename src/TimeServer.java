@@ -1,79 +1,51 @@
 package recupInfos;
 
-
-
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 public class TimeServer {
 
-   //On initialise des valeurs par défaut
-   private int port = 2345;
-   private String host = "127.0.0.7";
-   private ServerSocket server = null;
-   private boolean isRunning = true;
-   
-   public TimeServer(){
-      try {
-         server = new ServerSocket(port, 100, InetAddress.getByName(host));
-      } catch (UnknownHostException e) {
-         e.printStackTrace();
-      } catch (IOException e) {
-         e.printStackTrace();
-      }
-   }
-   
-   public TimeServer(String pHost, int pPort){
-      host = pHost;
-      port = pPort;
-      try {
-         server = new ServerSocket(port, 100, InetAddress.getByName(host));
-      } catch (UnknownHostException e) {
-         e.printStackTrace();
-      } catch (IOException e) {
-         e.printStackTrace();
-      }
-   }
-   
-   
-   //On lance notre serveur
-   public void open(){
-      
-      //Toujours dans un thread à part vu qu'il est dans une boucle infinie
-      Thread t = new Thread(new Runnable(){
-         public void run(){
-            while(isRunning == true){
-               
-               try {
-                  //On attend une connexion d'un client
-                  Socket client = server.accept();
-                  
-                  //Une fois reçue, on la traite dans un thread séparé
-                  System.out.println("Connexion cliente reçue.");                  
-                  Thread t = new Thread(new ClientProcessor(client));
-                  t.start();
-                  
-               } catch (IOException e) {
-                  e.printStackTrace();
-               }
-            }
-            
-            try {
-               server.close();
-            } catch (IOException e) {
-               e.printStackTrace();
-               server = null;
-            }
-         }
-      });
-      
-      t.start();
-   }
-   
-   public void close(){
-      isRunning = false;
-   }   
+	public static void main(String[] zero) {
+
+		ServerSocket socket;
+		try {
+			socket = new ServerSocket(2009);
+			Thread t = new Thread(new Accepter_clients(socket));
+			t.start();
+			System.out.println("Mes employeurs sont prêts !");
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+	}
+}
+
+class Accepter_clients implements Runnable {
+
+	private ServerSocket socketserver;
+	private Socket socket;
+	private int nbrclient = 1;
+
+	public Accepter_clients(ServerSocket s) {
+		socketserver = s;
+	}
+
+	public void run() {
+
+		try {
+			while (true) {
+				socket = socketserver.accept(); // Un client se connecte on
+												// l'accepte
+				System.out.println("Le client numéro " + nbrclient + " est connecté !");
+				nbrclient++;
+				socket.close();
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

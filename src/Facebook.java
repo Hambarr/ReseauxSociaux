@@ -1,6 +1,6 @@
+package recupInfos;
+
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -13,7 +13,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.jdom2.input.SAXBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -65,7 +64,7 @@ public class Facebook {
 		}
 	}
 
-	public static boolean Extraction(String nomPage, String motCle) {
+	public boolean Extraction(String nomPage, String motCle) {
 
 		String mot = motCle;
 		try {
@@ -81,11 +80,12 @@ public class Facebook {
 
 				Page page = fbClient.fetchObject(nomPage, Page.class);
 				Connection<Post> postFeed = fbClient.fetchConnection(page.getId() + "/feed", Post.class);
-
+				
 				Element nom = doc.createElement("NOM");
 				nom.appendChild(doc.createTextNode(page.getName()));
 				rootElement.appendChild(nom);
 
+				
 				Element idpage = doc.createElement("ID");
 				idpage.appendChild(doc.createTextNode(page.getId()));
 				rootElement.appendChild(idpage);
@@ -95,6 +95,7 @@ public class Facebook {
 						if (aPost.getMessage() != null && aPost.getMessage().contains(mot)) {
 							Element publication = doc.createElement("PUBLICATION");
 							rootElement.appendChild(publication);
+							System.out.println(page.getBirthday());
 							System.out.println(aPost.getFrom().getName());
 							System.out.println("-->" + aPost.getMessage());
 							System.out.println("fb.com/" + aPost.getId());
@@ -167,7 +168,7 @@ public class Facebook {
 				}
 				StreamResult result = new StreamResult(new File("Donnees/" + nomPage + "_" + mot + ".xml"));
 				transformer.transform(source, result);
-				System.out.println("Le fichier " + page.getName() + "_" + mot + ".xml est sauvegardé !");
+				System.out.println("Le fichier " + nomPage + "_" + mot + ".xml est sauvegardé !");
 
 			} catch (ParserConfigurationException pce) {
 				pce.printStackTrace();

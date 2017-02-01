@@ -38,7 +38,7 @@ public class Connection extends JFrame {
 		this.setTitle("Connection à Facebook");
 		this.setSize(400, 100);
 		this.setResizable(false);
-		this.setAlwaysOnTop(true);
+		this.setAlwaysOnTop(false);
 		this.setLocationRelativeTo(null);
 		container.setBackground(Color.blue);
 		container.setLayout(new BorderLayout());
